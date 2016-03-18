@@ -243,13 +243,9 @@ namespace ClickWar2.Game.Network.ServerWorker
                 }
             }
             catch (FileNotFoundException)
-            {
-
-            }
+            { }
             catch (EndOfStreamException)
-            {
-                
-            }
+            { }
         }
 
         public bool CompanyExists(string name)
