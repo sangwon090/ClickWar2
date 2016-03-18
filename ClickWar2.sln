@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickWar2", "ClickWar2\ClickWar2.csproj", "{02432977-D16D-4939-979F-9C98BE6DD891}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickWar2 Server", "ClickWar2 Server\ClickWar2 Server.csproj", "{DD7B889B-9AC9-46C8-A926-D38D929E1458}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickWar2 Client", "ClickWar2 Client\ClickWar2 Client.csproj", "{AACFC2DB-C0C0-41C7-A685-D8A5259C6CB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickWarUnitTest", "ClickWarUnitTest\ClickWarUnitTest.csproj", "{E47B8BFA-ED2D-462B-9B03-1F74C5B25AB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02432977-D16D-4939-979F-9C98BE6DD891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02432977-D16D-4939-979F-9C98BE6DD891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02432977-D16D-4939-979F-9C98BE6DD891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02432977-D16D-4939-979F-9C98BE6DD891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD7B889B-9AC9-46C8-A926-D38D929E1458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD7B889B-9AC9-46C8-A926-D38D929E1458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD7B889B-9AC9-46C8-A926-D38D929E1458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD7B889B-9AC9-46C8-A926-D38D929E1458}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACFC2DB-C0C0-41C7-A685-D8A5259C6CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACFC2DB-C0C0-41C7-A685-D8A5259C6CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACFC2DB-C0C0-41C7-A685-D8A5259C6CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACFC2DB-C0C0-41C7-A685-D8A5259C6CB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47B8BFA-ED2D-462B-9B03-1F74C5B25AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47B8BFA-ED2D-462B-9B03-1F74C5B25AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47B8BFA-ED2D-462B-9B03-1F74C5B25AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47B8BFA-ED2D-462B-9B03-1F74C5B25AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AACFC2DB-C0C0-41C7-A685-D8A5259C6CB8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ClickWar2_Client</RootNamespace>
+    <AssemblyName>ClickWar2 Client</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.2.3\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.2.3\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.2.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.2.2.3\lib\net45\MongoDB.Driver.Legacy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form_BlockMacro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_BlockMacro.Designer.cs">
+      <DependentUpon>Form_BlockMacro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Connect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Connect.Designer.cs">
+      <DependentUpon>Form_Connect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_DevTech.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_DevTech.Designer.cs">
+      <DependentUpon>Form_DevTech.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_InputSellInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_InputSellInformation.Designer.cs">
+      <DependentUpon>Form_InputSellInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Main.Designer.cs">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_SelectString.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_SelectString.Designer.cs">
+      <DependentUpon>Form_SelectString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Start.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Start.Designer.cs">
+      <DependentUpon>Form_Start.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_StringInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_StringInput.Designer.cs">
+      <DependentUpon>Form_StringInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_WriteCopApplicationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_WriteCopApplicationForm.Designer.cs">
+      <DependentUpon>Form_WriteCopApplicationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_WriteMail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_WriteMail.Designer.cs">
+      <DependentUpon>Form_WriteMail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ICopApplicationFormReceiver.cs" />
+    <Compile Include="IMailReceiver.cs" />
+    <Compile Include="IStringReceiver.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form_BlockMacro.resx">
+      <DependentUpon>Form_BlockMacro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Connect.resx">
+      <DependentUpon>Form_Connect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_DevTech.resx">
+      <DependentUpon>Form_DevTech.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_InputSellInformation.resx">
+      <DependentUpon>Form_InputSellInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Main.resx">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_SelectString.resx">
+      <DependentUpon>Form_SelectString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Start.resx">
+      <DependentUpon>Form_Start.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_StringInput.resx">
+      <DependentUpon>Form_StringInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_WriteCopApplicationForm.resx">
+      <DependentUpon>Form_WriteCopApplicationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_WriteMail.resx">
+      <DependentUpon>Form_WriteMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClickWar2\ClickWar2.csproj">
+      <Project>{02432977-d16d-4939-979f-9c98be6dd891}</Project>
+      <Name>ClickWar2</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
+    <EmbeddedResource Include="Ref\ClickWar2.dll" />
+    <None Include="Resources\loading.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
