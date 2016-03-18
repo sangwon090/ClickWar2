@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
 using ClickWar2.Game.Network.ServerWorker;
+using ClickWar2.Game.Utility.Random;
 
 namespace ClickWar2.Game
 {
@@ -558,6 +559,26 @@ namespace ClickWar2.Game
                 return 1;
             });
             SetWork("to integer", "int");
+            
+            SetWork("random", 2, (boardDirector, userDirector, chip, param, hereTile, herePose) =>
+            {
+                if (!IsInt(param[1]))
+                    return 1;
+                    
+                // 아마도 ArrayIndexBoundsOfException
+                // if문으로 안한 이유는 귀찮아서입니다.
+                try {
+                    if (!IsInt(param[2]))
+                        return 1;
+                    
+                    this.SetVar(param[0], Random.Next(ToInt(param[1]), ToInt(param[2])));
+                } catch {
+                    this.SetVar(param[0], Random.Next(ToInt(param[1])));
+                } finally {
+                    return 1;
+                }
+            });
+            SetWork("random", "rnd");
         }
 
         //#####################################################################################
