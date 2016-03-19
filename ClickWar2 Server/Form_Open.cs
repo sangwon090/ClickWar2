@@ -61,7 +61,7 @@ namespace ClickWar2_Server
                         {
                             if (form is Form_Main)
                             {
-                                ((Form_Main)form).Reset(server);
+                                (form as Form_Main).Reset(server);
                                 form.Show();
                                 return;
                             }

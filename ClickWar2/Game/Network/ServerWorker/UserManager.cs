@@ -109,19 +109,26 @@ namespace ClickWar2.Game.Network.ServerWorker
             m_accountList.Clear();
 
 
-            using (StreamReader sr = new StreamReader(new FileStream(this.ServerPath + this.UserFileName, FileMode.OpenOrCreate)))
+            try
             {
-                Version fileVersion = new Version(sr.ReadLine().Trim());
-
-
-                while (!sr.EndOfStream)
+                using (StreamReader sr = new StreamReader(new FileStream(this.ServerPath + this.UserFileName, FileMode.Open)))
                 {
-                    var account = new GamePlayer();
-                    account.LoadFrom(sr);
+                    Version fileVersion = new Version(sr.ReadLine().Trim());
 
-                    m_accountList.Add(account.Name, account);
+
+                    while (!sr.EndOfStream)
+                    {
+                        var account = new GamePlayer();
+                        account.LoadFrom(sr);
+
+                        m_accountList.Add(account.Name, account);
+                    }
                 }
             }
+            catch (FileNotFoundException)
+            { }
+            catch (EndOfStreamException)
+            { }
         }
 
         public GamePlayer GetAccount(string name)
