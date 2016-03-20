@@ -587,38 +587,63 @@ namespace ClickWar2.Game
             });
             SetWork("random", "rnd");
             
+
             SetWork("divide", 3, (boardDirector, userDirector, chip, param, hereTile, herePos) =>
             {
                 if (IsText(param[0]))
                     param[0] = ToText(param[0]);
 
+
                 string result = "";
                 if (IsInt(param[1]) && IsInt(param[2]))
                 {
-                    int division = ToInt(param[1]) / ToInt(param[2]);
-                    result = division.ToString();
+                    int under = ToInt(param[2]);
+
+                    if (under == 0)
+                    {
+                        result = "0";
+                    }
+                    else
+                    {
+                        int division = ToInt(param[1]) / under;
+                        result = division.ToString();
+                    }
                 }
 
+
                 this.SetVar(param[0], result);
+
 
                 return 1;
             });
             SetWork("divide", "div");
 
-            //나머지 연산자
+            
             SetWork("modulo", 3, (boardDirector, userDirector, chip, param, hereTile, herePos) =>
             {
                 if (IsText(param[0]))
                     param[0] = ToText(param[0]);
 
+
                 string result = "";
                 if (IsInt(param[1]) && IsInt(param[2]))
                 {
-                    int modulus = ToInt(param[1]) % ToInt(param[2]);
-                    result = modulus.ToString();
+                    int under = ToInt(param[2]);
+
+                    if (under == 0)
+                    {
+                        result = "0";
+                    }
+                    else
+                    {
+                        int division = ToInt(param[1]) % under;
+                        result = division.ToString();
+                    }
                 }
 
+
                 this.SetVar(param[0], result);
+
 
                 return 1;
             });
