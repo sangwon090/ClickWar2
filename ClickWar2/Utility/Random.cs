@@ -12,17 +12,38 @@ namespace ClickWar2.Utility
 
         public static int Next()
         {
-            return s_random.Next();
+            try
+            {
+                return s_random.Next();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return 0;
+            }
         }
 
         public static int Next(int max)
         {
-            return s_random.Next(max);
+            try
+            {
+                return s_random.Next(max);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return 0;
+            }
         }
 
         public static int Next(int min, int max)
         {
-            return s_random.Next(min, max);
+            try
+            {
+                return s_random.Next(min, max);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return 0;
+            }
         }
     }
 }
