@@ -310,6 +310,16 @@ namespace ClickWar2.Game.Network.ServerWorker
                 tileX, tileY);
         }
 
+        protected void NoticeDestroyChip(int tileX, int tileY)
+        {
+            NetMessageStream writer = new NetMessageStream();
+            writer.WriteData(tileX);
+            writer.WriteData(tileY);
+
+            this.NoticeToUsersInVision(writer.CreateMessage((int)MessageTypes.Ntf_DestroyChip),
+                tileX, tileY);
+        }
+
         //#####################################################################################
         // 수신된 메세지 처리
 
@@ -948,12 +958,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
 
                         // 칩 제거 알림
-                        NetMessageStream writer = new NetMessageStream();
-                        writer.WriteData(tileX);
-                        writer.WriteData(tileY);
-
-                        this.NoticeToUsersInVision(writer.CreateMessage((int)MessageTypes.Ntf_DestroyChip),
-                            tileX, tileY);
+                        this.NoticeDestroyChip(tileX, tileY);
                     }
                 }
             }
@@ -1050,11 +1055,23 @@ namespace ClickWar2.Game.Network.ServerWorker
 
             if (captureSuccess)
             {
-                // 점령된 타일에 회사가 존재하면
-                if (targetTile != null && targetTile.IsCompanyTile)
+                if (targetTile != null)
                 {
-                    // 회사 파괴
-                    this.CompanyDirector.DestroyCompany(attackerName, tileX, tileY);
+                    // 점령된 타일에 회사가 존재하면
+                    if (targetTile.IsCompanyTile)
+                    {
+                        // 회사 파괴
+                        this.CompanyDirector.DestroyCompany(attackerName, tileX, tileY);
+                    }
+                    // 점령된 타일에 칩이 존재하면
+                    else if (targetTile.IsChipTile)
+                    {
+                        // 칩 파괴
+                        this.GameBoard.DestroyChip(tileX, tileY);
+
+                        // 칩 파괴 알림
+                        this.NoticeDestroyChip(tileX, tileY);
+                    }
                 }
 
 

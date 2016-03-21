@@ -351,10 +351,10 @@ namespace ClickWar2.Game
         }
 
         public Point[] AttackTerritory(string attackerName, int targetX, int targetY,
-            out bool captureSuccess, out string capturedOwner)
+            out bool captureSuccess, out string oldOwner)
         {
             captureSuccess = false;
-            capturedOwner = "";
+            oldOwner = "";
             List<Point> changedTileList = new List<Point>();
 
 
@@ -362,6 +362,9 @@ namespace ClickWar2.Game
 
             if (targetTile != null)
             {
+                oldOwner = targetTile.Owner;
+
+
                 // 목표 타일이 이미 자신의 영토이면
                 // 더이상 처리하지 않고 반환.
                 if (targetTile.Owner == attackerName)
@@ -416,10 +419,6 @@ namespace ClickWar2.Game
                     // 점령 판정
                     if (targetTile.Power <= 0)
                     {
-                        // 점령전 소유자 저장
-                        capturedOwner = targetTile.Owner;
-
-
                         // 점령
                         targetTile.Owner = attackerName;
                         targetTile.Power = Math.Abs(targetTile.Power) + 1;
