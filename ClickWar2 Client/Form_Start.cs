@@ -96,6 +96,7 @@ namespace ClickWar2_Client
         private void SequenceToNext()
         {
             var nextForm = new Form_Connect();
+            nextForm.Reset();
             nextForm.Show();
 
             this.Hide();

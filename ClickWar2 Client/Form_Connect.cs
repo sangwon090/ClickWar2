@@ -24,8 +24,6 @@ namespace ClickWar2_Client
             this.textBox_port.Text = "3344";
             this.textBox_name.Text = "뭐지What";
             this.textBox_password.Text = "abcd1234";
-#else
-            this.textBox_address.Text = "$OfficialServer";
 #endif
         }
 
@@ -35,30 +33,50 @@ namespace ClickWar2_Client
 
         //#####################################################################################
 
+        protected List<ClickWar2.Database.ServerData> m_serverList = new List<ClickWar2.Database.ServerData>();
+
+        //#####################################################################################
+
+        public void Reset()
+        {
+            m_serverList = ClickWar2.Application.GetOfficialServer("OfficialServer");
+
+
+            this.comboBox_serverList.BeginUpdate();
+            this.comboBox_serverList.Items.Clear();
+
+            foreach (var server in m_serverList)
+            {
+                this.comboBox_serverList.Items.Add(server.Name);
+            }
+
+            this.comboBox_serverList.EndUpdate();
+        }
+
+        //#####################################################################################
+
         private void Form_Connect_Load(object sender, EventArgs e)
         {
-#if DEBUG
-            this.checkBox_official.Checked = false;
-#endif
+            this.checkBox_saveConnection.Checked = RegistryHelper.GetDataAsBool("AutoLoginFlag", false);
 
-
-            this.checkBox_autoLogin.Checked = RegistryHelper.GetDataAsBool("AutoLoginFlag", false);
-
-            if (this.checkBox_autoLogin.Checked)
+            if (this.checkBox_saveConnection.Checked)
             {
-                // 레지스트리에서 로그인 정보 가져옴
-                this.textBox_name.Text = RegistryHelper.GetData("LoginName", "");
-
+                // 레지스트리에서 정보 가져옴
                 try
                 {
+                    this.comboBox_serverList.Text = RegistryHelper.GetData("LoginServer", "");
+                    this.textBox_address.Text = RegistryHelper.GetData("LoginAddress", "");
+                    this.textBox_port.Text = RegistryHelper.GetData("LoginPort", "");
+                    this.textBox_name.Text = RegistryHelper.GetData("LoginName", "");
+
                     string key = RegistryHelper.GetData("LoginKey", "");
                     this.textBox_password.Text = Security.DecodeEx(RegistryHelper.GetData("LoginPass", ""),
                         key);
 
-                    // 로그인 시도
-                    BeginLogin();
+                    // 자동 로그인 시도
+                    //BeginLogin();
                 }
-                catch (Exception)
+                catch
                 {
                     MessageBox.Show("자동로그인 정보가 올바르지 않습니다.\n수동로그인을 시도하세요.",
                         "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -79,21 +97,14 @@ namespace ClickWar2_Client
             Application.Exit();
         }
 
-        private void checkBox_official_CheckedChanged(object sender, EventArgs e)
+        private void comboBox_serverList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool bChecked = this.checkBox_official.Checked;
+            int index = this.comboBox_serverList.SelectedIndex;
 
-            this.textBox_address.Enabled = !bChecked;
-
-            if (bChecked)
+            if (index >= 0 && index < m_serverList.Count)
             {
-                this.textBox_address.Text = "$OfficialServer";
-                this.textBox_port.Text = "";
-            }
-            else
-            {
-                this.textBox_address.Focus();
-                this.textBox_address.SelectAll();
+                this.textBox_address.Text = m_serverList[index].Address;
+                this.textBox_port.Text = m_serverList[index].Port;
             }
         }
 
@@ -136,21 +147,7 @@ namespace ClickWar2_Client
             {
                 string address = "", port = "";
 
-                if (this.checkBox_official.Checked
-                    || this.textBox_address.TextLength <= 0
-                    || this.textBox_address.Text == "$OfficialServer")
-                {
-                    LoadOfficialServer(out address, out port);
-
-                    // 공식서버로 연결되는 것이라고 해도 포트 번호가 적혀있으면 해당 포트로 연결한다.
-                    if (this.textBox_port.TextLength > 0)
-                    {
-                        int tempPort;
-                        if (int.TryParse(this.textBox_port.Text, out tempPort))
-                            port = this.textBox_port.Text;
-                    }
-                }
-                else if (this.textBox_address.TextLength > 0
+                if (this.textBox_address.TextLength > 0
                     && this.textBox_port.TextLength >= 4)
                 {
                     address = this.textBox_address.Text;
@@ -217,44 +214,41 @@ namespace ClickWar2_Client
 
         protected void SaveAutoLoginInformation()
         {
-            if (this.checkBox_autoLogin.Checked)
+            if (this.checkBox_saveConnection.Checked)
             {
+                RegistryHelper.SetData("LoginServer", this.comboBox_serverList.Text);
+                RegistryHelper.SetData("LoginAddress", this.textBox_address.Text);
+                RegistryHelper.SetData("LoginPort", this.textBox_port.Text);
                 RegistryHelper.SetData("LoginName", this.textBox_name.Text);
 
                 string key;
                 string pass = Security.EncodeEx(this.textBox_password.Text, out key);
                 RegistryHelper.SetData("LoginPass", pass);
-
                 RegistryHelper.SetData("LoginKey", key);
             }
             else
             {
+                RegistryHelper.SetData("LoginServer", "");
+                RegistryHelper.SetData("LoginAddress", "");
+                RegistryHelper.SetData("LoginPort", "");
                 RegistryHelper.SetData("LoginName", "");
                 RegistryHelper.SetData("LoginPass", "");
                 RegistryHelper.SetData("LoginKey", "");
             }
 
-            RegistryHelper.SetData<bool>("AutoLoginFlag", this.checkBox_autoLogin.Checked);
-        }
-
-        protected bool LoadOfficialServer(out string address, out string port)
-        {
-            return ClickWar2.Application.GetOfficialServer("OfficialServer", out address, out port);
+            RegistryHelper.SetData<bool>("AutoLoginFlag", this.checkBox_saveConnection.Checked);
         }
 
         protected void EnableUI()
         {
-            if (this.checkBox_official.Checked == false)
-            {
-                this.textBox_address.Enabled = true;
-            }
+            this.textBox_address.Enabled = true;
             this.textBox_port.Enabled = true;
 
-            this.checkBox_official.Enabled = true;
+            this.comboBox_serverList.Enabled = true;
 
             this.textBox_name.Enabled = true;
             this.textBox_password.Enabled = true;
-            this.checkBox_autoLogin.Enabled = true;
+            this.checkBox_saveConnection.Enabled = true;
             this.button_connect.Enabled = true;
         }
 
@@ -263,11 +257,11 @@ namespace ClickWar2_Client
             this.textBox_address.Enabled = false;
             this.textBox_port.Enabled = false;
 
-            this.checkBox_official.Enabled = false;
+            this.comboBox_serverList.Enabled = false;
 
             this.textBox_name.Enabled = false;
             this.textBox_password.Enabled = false;
-            this.checkBox_autoLogin.Enabled = false;
+            this.checkBox_saveConnection.Enabled = false;
             this.button_connect.Enabled = false;
         }
 

@@ -53,27 +53,33 @@ namespace ClickWar2
             }
         }
 
-        public static bool GetOfficialServer(string documentName, out string address, out string port)
+        public static List<Database.ServerData> GetOfficialServer(string documentName)
         {
+            var results = new List<Database.ServerData>();
+
+
             var db = new Database.DBHelper();
             db.Connect();
 
             var doc = db.GetDocument("Server", documentName);
 
-            if (doc == null)
+            if (doc != null)
             {
-                address = "";
-                port = "";
+                var servers = doc["OfficialServerList"].AsBsonArray;
 
-                return false;
+                foreach (var serverData in servers)
+                {
+                    results.Add(new Database.ServerData()
+                    {
+                        Name = serverData["Name"].AsString,
+                        Address = serverData["Address"].AsString,
+                        Port = serverData["Port"].AsString
+                    });
+                }
             }
-            else
-            {
-                address = doc["Address"].AsString;
-                port = doc["Port"].AsString;
 
-                return true;
-            }
+
+            return results;
         }
     }
 }

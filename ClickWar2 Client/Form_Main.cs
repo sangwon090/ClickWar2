@@ -808,12 +808,14 @@ namespace ClickWar2_Client
             {
                 if (form is Form_Connect)
                 {
+                    (form as Form_Connect).Reset();
                     form.Show();
                     return;
                 }
             }
 
             var nextForm = new Form_Connect();
+            nextForm.Reset();
             nextForm.Show();
         }
 
