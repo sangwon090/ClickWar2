@@ -1057,7 +1057,7 @@ namespace ClickWar2_Client
         private void button_help_Click(object sender, EventArgs e)
         {
             // 도움말 허브 페이지 열기
-            System.Diagnostics.Process.Start("http://blog.naver.com/tlsehdgus321/220649272323");
+            System.Diagnostics.Process.Start("http://neurowhai.tistory.com/188");
         }
 
         //#####################################################################################
