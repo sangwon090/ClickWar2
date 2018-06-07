@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Start));
-            this.timer_update = new System.Windows.Forms.Timer(this.components);
+            this.timer_check = new System.Windows.Forms.Timer(this.components);
             this.label_under = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // timer_update
+            // timer_check
             // 
-            this.timer_update.Interval = 16;
-            this.timer_update.Tick += new System.EventHandler(this.timer_update_Tick);
+            this.timer_check.Interval = 16;
+            this.timer_check.Tick += new System.EventHandler(this.timer_update_Tick);
             // 
             // label_under
             // 
@@ -60,7 +60,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form_Start";
-            this.Opacity = 0D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Loading";
             this.Load += new System.EventHandler(this.Form_Start_Load);
@@ -71,7 +70,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer timer_update;
+        private System.Windows.Forms.Timer timer_check;
         private System.Windows.Forms.Label label_under;
     }
 }

@@ -24,29 +24,19 @@ namespace ClickWar2_Server
             this.label_under.Text = Application.ProductVersion;
 
 
-            this.timer_update.Start();
+            this.timer_check.Start();
         }
 
         private void timer_update_Tick(object sender, EventArgs e)
         {
-            if (this.Opacity < 1.0)
+            this.timer_check.Stop();
+
+
+            bool bExit = this.CheckUpdateAndNotice();
+
+            if (bExit == false)
             {
-                this.Opacity += 0.02;
-
-                if (this.Opacity >= 1.0)
-                {
-                    this.Opacity = 1.0;
-
-                    this.timer_update.Stop();
-
-
-                    bool bExit = this.CheckUpdateAndNotice();
-
-                    if (bExit == false)
-                    {
-                        this.SequenceToNext();
-                    }
-                }
+                this.SequenceToNext();
             }
         }
 

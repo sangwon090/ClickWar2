@@ -24,38 +24,28 @@ namespace ClickWar2_Client
             this.label_under.Text = Application.ProductVersion;
 
 
-            this.timer_update.Start();
-        }
-
-        private void timer_update_Tick(object sender, EventArgs e)
-        {
-            if (this.Opacity < 1.0)
-            {
-                this.Opacity += 0.02;
-
-                if (this.Opacity >= 1.0)
-                {
-                    this.Opacity = 1.0;
-
-                    this.timer_update.Stop();
-
-
-                    bool bExit = this.CheckUpdateAndNotice();
-
-                    if (bExit)
-                    {
-                        this.Close();
-                        Application.Exit();
-                    }
-                    else
-                    {
-                        this.SequenceToNext();
-                    }
-                }
-            }
+            this.timer_check.Start();
         }
 
         //#####################################################################################
+
+        private void timer_check_Tick(object sender, EventArgs e)
+        {
+            this.timer_check.Stop();
+
+
+            bool bExit = this.CheckUpdateAndNotice();
+
+            if (bExit)
+            {
+                this.Close();
+                Application.Exit();
+            }
+            else
+            {
+                this.SequenceToNext();
+            }
+        }
 
         private bool CheckUpdateAndNotice()
         {
