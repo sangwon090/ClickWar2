@@ -15,17 +15,12 @@ namespace ClickWar2.Network.Protocol
 
         }
 
-        public NetMessageBody(string data)
-        {
-            this.Data = new StringBuilder(data);
-        }
-
         public NetMessageBody(byte[] data)
         {
             try
             {
                 this.CheckSum = BitConverter.ToInt32(data, 0);
-                this.Data = new StringBuilder(Encoding.Unicode.GetString(data, sizeof(int), data.Length - sizeof(int)));
+                this.Data = data.Skip(sizeof(int)).ToList();
             }
             catch (Exception)
             {
@@ -40,7 +35,7 @@ namespace ClickWar2.Network.Protocol
                 byte[] data = Security.Decode(encryptedData, key);
 
                 this.CheckSum = BitConverter.ToInt32(data, 0);
-                this.Data = new StringBuilder(Encoding.Unicode.GetString(data, sizeof(int), data.Length - sizeof(int)));
+                this.Data = data.Skip(sizeof(int)).ToList();
             }
             catch (Exception)
             {
@@ -53,8 +48,8 @@ namespace ClickWar2.Network.Protocol
         protected int CheckSum
         { get; set; }
 
-        public StringBuilder Data
-        { get; set; } = new StringBuilder();
+        public List<byte> Data
+        { get; set; } = new List<byte>();
 
         //#####################################################################################
 
@@ -62,7 +57,7 @@ namespace ClickWar2.Network.Protocol
         {
             NetMessageBody clone = new NetMessageBody();
             clone.CheckSum = this.CheckSum;
-            clone.Data = new StringBuilder(this.Data.ToString());
+            clone.Data.AddRange(this.Data);
 
 
             return clone;
@@ -73,7 +68,7 @@ namespace ClickWar2.Network.Protocol
         protected int CalculateCheckSum()
         {
             int checkSum = 0;
-            checkSum += Encoding.Unicode.GetByteCount(this.Data.ToString());
+            checkSum += this.Data.Count;
 
 
             return checkSum;
@@ -90,7 +85,7 @@ namespace ClickWar2.Network.Protocol
         }
 
         public int ByteSize
-        { get { return (sizeof(int) + Encoding.Unicode.GetByteCount(this.Data.ToString())); } }
+        { get { return (sizeof(int) + this.Data.Count); } }
 
         public byte[] GetBytes()
         {
@@ -101,9 +96,8 @@ namespace ClickWar2.Network.Protocol
 
             var checkSumBytes = BitConverter.GetBytes(this.CheckSum);
             Array.Copy(checkSumBytes, 0, result, 0, checkSumBytes.Length);
-
-            var dataBytes = Encoding.Unicode.GetBytes(this.Data.ToString());
-            Array.Copy(dataBytes, 0, result, checkSumBytes.Length, dataBytes.Length);
+            
+            Array.Copy(this.Data.ToArray(), 0, result, checkSumBytes.Length, this.Data.Count);
 
 
             return result;

@@ -42,7 +42,7 @@ namespace ClickWar2.Game.Network.ServerWorker
         protected void NtfReceiveMailTo(ServerVisitor targetClient, Mail mail)
         {
             NetMessageStream writer = new NetMessageStream();
-            writer.WriteData<int>(mail.Read ? 1 : 0);
+            writer.WriteData(mail.Read ? 1 : 0);
             writer.WriteData(mail.From);
             writer.WriteData(mail.To);
             writer.WriteData(mail.SendingDate);
@@ -69,10 +69,10 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqSendMail(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string targetName = msg.ReadData<string>();
-            string date = msg.ReadData<string>();
-            string message = msg.ReadData<string>();
+            string userName = msg.ReadString();
+            string targetName = msg.ReadString();
+            string date = msg.ReadString();
+            string message = msg.ReadString();
 
 
             // 인증
@@ -113,7 +113,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqMailbox(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 인증
@@ -139,8 +139,8 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqReadMail(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int index = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int index = msg.ReadInt32();
 
 
             // 인증

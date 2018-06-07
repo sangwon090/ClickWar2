@@ -73,9 +73,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspCountryLocation(NetMessageStream msg)
         {
-            int exist = msg.ReadData<int>();
-            int x = msg.ReadData<int>();
-            int y = msg.ReadData<int>();
+            int exist = msg.ReadInt32();
+            int x = msg.ReadInt32();
+            int y = msg.ReadInt32();
 
 
             // 국가 위치 알림
@@ -88,8 +88,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspNewTerritory(NetMessageStream msg)
         {
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 새 영토 위치 알림
@@ -102,9 +102,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfSetTilePower(NetMessageStream msg)
         {
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
-            int newPower = msg.ReadData<int>();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
+            int newPower = msg.ReadInt32();
 
 
             // 클라측 보드에 존재하는 지역이고 시야 내의 타일이면
@@ -130,8 +130,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspUpdateChunk(NetMessageStream msg)
         {
-            int chunkX = msg.ReadData<int>();
-            int chunkY = msg.ReadData<int>();
+            int chunkX = msg.ReadInt32();
+            int chunkY = msg.ReadInt32();
 
 
             // 청크 생성
@@ -162,14 +162,14 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfCountryBuilt(NetMessageStream msg)
         {
-            bool success = (msg.ReadData<int>() != 0);
+            bool success = (msg.ReadInt32() != 0);
 
             if (success)
             {
-                string userName = msg.ReadData<string>();
-                int tileX = msg.ReadData<int>();
-                int tileY = msg.ReadData<int>();
-                int beginningMoney = msg.ReadData<int>();
+                string userName = msg.ReadString();
+                int tileX = msg.ReadInt32();
+                int tileY = msg.ReadInt32();
+                int beginningMoney = msg.ReadInt32();
 
 
                 // 클라측 보드에 존재하는 지역이고 시야 내의 타일이면
@@ -218,18 +218,18 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfAttackTerritory(NetMessageStream msg)
         {
-            string attackerName = msg.ReadData<string>();
-            int targetX = msg.ReadData<int>();
-            int targetY = msg.ReadData<int>();
+            string attackerName = msg.ReadString();
+            int targetX = msg.ReadInt32();
+            int targetY = msg.ReadInt32();
 
-            string victimName = msg.ReadData<string>();
+            string victimName = msg.ReadString();
 
-            int changedCount = msg.ReadData<int>();
+            int changedCount = msg.ReadInt32();
 
             for (int i = 0; i < changedCount; ++i)
             {
-                int tileX = msg.ReadData<int>();
-                int tileY = msg.ReadData<int>();
+                int tileX = msg.ReadInt32();
+                int tileY = msg.ReadInt32();
 
 
                 // NOTE: 무조건 읽도록 함.
@@ -261,15 +261,15 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspVision(NetMessageStream msg)
         {
-            int centerX = msg.ReadData<int>();
-            int centerY = msg.ReadData<int>();
-            int visionLength = msg.ReadData<int>();
+            int centerX = msg.ReadInt32();
+            int centerY = msg.ReadInt32();
+            int visionLength = msg.ReadInt32();
 
-            int userTableCount = msg.ReadData<int>();
+            int userTableCount = msg.ReadInt32();
             List<string> userNameTable = new List<string>();
             for (int i = 0; i < userTableCount; ++i)
             {
-                userNameTable.Add(msg.ReadData<string>());
+                userNameTable.Add(msg.ReadString());
             }
 
 
@@ -290,7 +290,7 @@ namespace ClickWar2.Game.Network.ClientWorker
                     tile.Visible = true;
 
                     // 주인 동기화
-                    int userNameIndex = msg.ReadData<int>();
+                    int userNameIndex = msg.ReadInt32();
                     if (userNameIndex < userNameTable.Count)
                         tile.Owner = userNameTable[userNameIndex];
 
@@ -302,8 +302,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspAllTerritory(NetMessageStream msg)
         {
-            int chunkX = msg.ReadData<int>();
-            int chunkY = msg.ReadData<int>();
+            int chunkX = msg.ReadInt32();
+            int chunkY = msg.ReadInt32();
 
             int chunkPosX = chunkX * this.GameBoard.Board.ChunkSize;
             int chunkPosY = chunkY * this.GameBoard.Board.ChunkSize;
@@ -311,8 +311,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
             while(!msg.EndOfStream)
             {
-                int tileX = msg.ReadData<int>();
-                int tileY = msg.ReadData<int>();
+                int tileX = msg.ReadInt32();
+                int tileY = msg.ReadInt32();
 
 
                 tileX += chunkPosX;
@@ -334,8 +334,8 @@ namespace ClickWar2.Game.Network.ClientWorker
         {
             while (!msg.EndOfStream)
             {
-                int tileX = msg.ReadData<int>();
-                int tileY = msg.ReadData<int>();
+                int tileX = msg.ReadInt32();
+                int tileY = msg.ReadInt32();
 
 
                 // 시야 타일 동기화
@@ -351,15 +351,15 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfSendPower(NetMessageStream msg)
         {
-            int sendingPower = msg.ReadData<int>();
-            int fromX = msg.ReadData<int>();
-            int fromY = msg.ReadData<int>();
-            int fromTilesPower = msg.ReadData<int>();
-            string fromTilesOwner = msg.ReadData<string>();
-            int toX = msg.ReadData<int>();
-            int toY = msg.ReadData<int>();
-            int toTilesPower = msg.ReadData<int>();
-            string toTilesOwner = msg.ReadData<string>();
+            int sendingPower = msg.ReadInt32();
+            int fromX = msg.ReadInt32();
+            int fromY = msg.ReadInt32();
+            int fromTilesPower = msg.ReadInt32();
+            string fromTilesOwner = msg.ReadString();
+            int toX = msg.ReadInt32();
+            int toY = msg.ReadInt32();
+            int toTilesPower = msg.ReadInt32();
+            string toTilesOwner = msg.ReadString();
 
 
             // 변경사항 동기화
@@ -386,10 +386,10 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfEditTileSign(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
-            string sign = msg.ReadData<string>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
+            string sign = msg.ReadString();
 
 
             // 변경사항 동기화
@@ -409,9 +409,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfUserEnd(NetMessageStream msg)
         {
-            string endUserName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string endUserName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 이벤트 발생
@@ -421,9 +421,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfBuildFactory(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 공장 동기화
@@ -438,10 +438,10 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfConvertAllResource(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
-            int powerGet = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
+            int powerGet = msg.ReadInt32();
 
 
             // 이벤트 발생
@@ -451,9 +451,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfDestroyFactory(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 공장 동기화
@@ -468,8 +468,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfBuildChip(NetMessageStream msg)
         {
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
             
             // 클라측 보드에 존재하는 지역이고 시야 내의 타일이면
@@ -482,8 +482,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfDestroyChip(NetMessageStream msg)
         {
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 클라측 보드에 존재하는 지역이고 시야 내의 타일이면
@@ -498,8 +498,8 @@ namespace ClickWar2.Game.Network.ClientWorker
         {
             while (!msg.EndOfStream)
             {
-                int tileX = msg.ReadData<int>();
-                int tileY = msg.ReadData<int>();
+                int tileX = msg.ReadInt32();
+                int tileY = msg.ReadInt32();
 
                 var serverTile = new Tile();
                 serverTile.ReadFromStream(msg);
@@ -810,7 +810,6 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void UpdateMyScreen(int beginX, int beginY, int width, int height)
         {
-            // 제품 설치 요청
             NetMessageStream writer = new NetMessageStream();
             writer.WriteData(this.SignDirector.LoginName);
             writer.WriteData(beginX);

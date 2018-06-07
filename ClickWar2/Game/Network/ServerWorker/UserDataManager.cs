@@ -42,7 +42,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqUserColor(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             var user = this.UserDirector.GetAccount(userName);
@@ -70,7 +70,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
 
                 writer = new NetMessageStream();
-                writer.WriteData<int>(1);
+                writer.WriteData(1);
 
                 client.Sender.SendMessage(writer.CreateMessage((int)MessageTypes.Rsp_AllUserInfo));
 
@@ -78,14 +78,14 @@ namespace ClickWar2.Game.Network.ServerWorker
                 foreach (var account in accounts)
                 {
                     writer = new NetMessageStream();
-                    writer.WriteData<int>(0);
+                    writer.WriteData(0);
 
                     writer.WriteData(account.UserColor.ToArgb());
                     writer.WriteData(account.Name);
                     writer.WriteData(account.AreaCount);
                     writer.WriteData(account.Resource);
 
-                    writer.WriteData<int>((account == accounts.Last()) ? 1 : 0);
+                    writer.WriteData((account == accounts.Last()) ? 1 : 0);
 
                     client.Sender.SendMessage(writer.CreateMessage((int)MessageTypes.Rsp_AllUserInfo));
                 }
@@ -97,7 +97,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqMyAllCompanyName(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 인증
@@ -128,7 +128,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqMyAllCompanySiteCount(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 인증
@@ -174,7 +174,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqMyAllCompanyTechList(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 인증
@@ -217,7 +217,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqMyAllCompanyProductList(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 인증

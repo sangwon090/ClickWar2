@@ -216,7 +216,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqLogin(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             LoginResults loginResult = LoginResults.Success;
@@ -225,10 +225,10 @@ namespace ClickWar2.Game.Network.ServerWorker
             // 로그인을 받을 수 있는 상태이면
             if (this.CanLogin)
             {
-                string password = msg.ReadData<string>();
+                string password = msg.ReadString();
                 string versionText = Utility.Version.Zero.ToString();
                 if (!msg.EndOfStream)
-                    versionText = msg.ReadData<string>();
+                    versionText = msg.ReadString();
                 Utility.Version clientVersion = new Utility.Version(versionText);
 
 
@@ -317,9 +317,9 @@ namespace ClickWar2.Game.Network.ServerWorker
             RegisterResults registerResult = RegisterResults.Success;
 
 
-            string userName = msg.ReadData<string>().Trim();
-            string password = msg.ReadData<string>();
-            Color userColor = Color.FromArgb(msg.ReadData<int>());
+            string userName = msg.ReadString().Trim();
+            string password = msg.ReadString();
+            Color userColor = Color.FromArgb(msg.ReadInt32());
 
 
             // 회원여부 확인

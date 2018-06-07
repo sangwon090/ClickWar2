@@ -49,7 +49,7 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspLogin(NetMessageStream msg)
         {
-            LoginResults loginResult = (LoginResults)msg.ReadData<int>();
+            LoginResults loginResult = (LoginResults)msg.ReadInt32();
 
             if (loginResult == LoginResults.Success)
             {
@@ -75,7 +75,7 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspRegister(NetMessageStream msg)
         {
-            RegisterResults result = (RegisterResults)msg.ReadData<int>();
+            RegisterResults result = (RegisterResults)msg.ReadInt32();
 
             // 계정등록 콜백 호출
             if (m_registerCallback != null)

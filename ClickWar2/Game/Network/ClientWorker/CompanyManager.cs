@@ -84,8 +84,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspRegisterCompany(NetMessageStream msg)
         {
-            RegisterCompanyResults result = (RegisterCompanyResults)msg.ReadData<int>();
-            string name = msg.ReadData<string>();
+            RegisterCompanyResults result = (RegisterCompanyResults)msg.ReadInt32();
+            string name = msg.ReadString();
 
 
             if (m_registerCompanyCallback != null)
@@ -97,10 +97,10 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfBuildCompany(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
-            string companyName = msg.ReadData<string>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
+            string companyName = msg.ReadString();
 
 
             // 자신의 회사이면
@@ -126,10 +126,10 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfDestroyCompany(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
-            string companyName = msg.ReadData<string>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
+            string companyName = msg.ReadString();
 
 
             // 자신의 회사이면
@@ -155,9 +155,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenRspDevelopTech(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>();
-            string techName = msg.ReadData<string>();
-            int result = msg.ReadData<int>();
+            string companyName = msg.ReadString();
+            string techName = msg.ReadString();
+            int result = msg.ReadInt32();
 
 
             // 동기화
@@ -178,8 +178,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenRspDiscardTech(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>();
-            string techName = msg.ReadData<string>();
+            string companyName = msg.ReadString();
+            string techName = msg.ReadString();
 
 
             // 동기화
@@ -200,8 +200,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenRspProduceProduct(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>();
-            string productName = msg.ReadData<string>();
+            string companyName = msg.ReadString();
+            string productName = msg.ReadString();
 
 
             // 동기화
@@ -222,8 +222,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenRspDiscardProduct(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>();
-            int productIndex = msg.ReadData<int>();
+            string companyName = msg.ReadString();
+            int productIndex = msg.ReadInt32();
 
 
             // 동기화
@@ -244,9 +244,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenRspTechProgram(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
-            int programSize = msg.ReadData<int>();
+            string companyName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
+            int programSize = msg.ReadInt32();
 
             StringBuilder program = new StringBuilder();
 
@@ -268,9 +268,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenNtfSellTech(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
-            int price = msg.ReadData<int>();
+            string companyName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
+            int price = msg.ReadInt32();
 
 
             // 기술 상점 목록에 추가
@@ -285,9 +285,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenNtfBuyTech(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
-            int price = msg.ReadData<int>();
+            string companyName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
+            int price = msg.ReadInt32();
 
 
             // 기술 상점 목록에서 제거
@@ -312,9 +312,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenNtfSellProduct(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>().Trim();
-            string productName = msg.ReadData<string>().Trim();
-            int price = msg.ReadData<int>();
+            string companyName = msg.ReadString().Trim();
+            string productName = msg.ReadString().Trim();
+            int price = msg.ReadInt32();
 
 
             // 제품 상점 목록에 추가
@@ -329,9 +329,9 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         public void WhenNtfBuyProduct(NetMessageStream msg)
         {
-            string companyName = msg.ReadData<string>().Trim();
-            string productName = msg.ReadData<string>().Trim();
-            int price = msg.ReadData<int>();
+            string companyName = msg.ReadString().Trim();
+            string productName = msg.ReadString().Trim();
+            int price = msg.ReadInt32();
 
 
             // 제품 상점 목록에서 제거

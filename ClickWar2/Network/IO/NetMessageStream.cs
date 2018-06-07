@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using ClickWar2.Network.Protocol;
 
 namespace ClickWar2.Network.IO
@@ -27,9 +28,6 @@ namespace ClickWar2.Network.IO
         //#####################################################################################
 
         protected NetMessage m_msg = null;
-
-        public string Token
-        { get; set; } = "\r\n";
 
         //#####################################################################################
 
@@ -66,56 +64,34 @@ namespace ClickWar2.Network.IO
             set { m_msg.Header.MessageNumber = value; }
         }
 
-        public T ReadData<T>()
+        public int ReadInt32()
         {
-            StringBuilder stream = m_msg.Body.Data;
-            StringBuilder item = new StringBuilder();
-
-            if (stream.Length < 2)
-                throw new System.IO.EndOfStreamException("메세지에 더이상 읽을 데이터가 없습니다.");
-
-            while (stream.Length >= this.Token.Length)
-            {
-                bool bFindToken = true;
-
-                for (int i = 0; i < this.Token.Length; ++i)
-                {
-                    if (stream[i] != this.Token[i])
-                    {
-                        bFindToken = false;
-                        break;
-                    }
-                }
-
-                if (bFindToken)
-                {
-                    stream.Remove(0, this.Token.Length);
-
-                    break;
-                }
-                else
-                {
-                    item.Append(stream[0]);
-
-                    stream.Remove(0, 1);
-                }
-            }
-
-
-            return (T)Convert.ChangeType(item.ToString(), typeof(T));
+            var data = BitConverter.ToInt32(m_msg.Body.Data.Take(sizeof(Int32)).ToArray(), 0);
+            m_msg.Body.Data.RemoveRange(0, sizeof(Int32));
+            return data;
         }
 
-        public void WriteData<T>(T data)
+        public string ReadString()
         {
-            StringBuilder stream = m_msg.Body.Data;
+            int length = ReadInt32();
+            var data = Encoding.UTF8.GetString(m_msg.Body.Data.Take(length).ToArray());
+            m_msg.Body.Data.RemoveRange(0, length);
+            return data;
+        }
 
-            stream.Append(data);
-            stream.Append(this.Token);
+        public void WriteData(Int32 data) => m_msg.Body.Data.AddRange(BitConverter.GetBytes(data));
+
+        public void WriteData(string data)
+        {
+            var bytes = Encoding.UTF8.GetBytes(data);
+
+            WriteData(bytes.Length);
+            m_msg.Body.Data.AddRange(bytes);
         }
 
         //#####################################################################################
 
         public bool EndOfStream
-        { get { return (m_msg.Body.Data.Length <= 0); } }
+        { get { return (m_msg.Body.Data.Count <= 0); } }
     }
 }

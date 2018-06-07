@@ -429,8 +429,8 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqRegisterCompany(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string companyName = msg.ReadData<string>().Trim();
+            string userName = msg.ReadString();
+            string companyName = msg.ReadString().Trim();
 
 
             RegisterCompanyResults result = RegisterCompanyResults.Fail_Unauthorized;
@@ -492,10 +492,10 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqBuildCompany(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
-            string companyName = msg.ReadData<string>().Trim();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
+            string companyName = msg.ReadString().Trim();
 
 
             // 인증
@@ -557,9 +557,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqDestroyCompany(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 인증
@@ -590,10 +590,10 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqDevelopTech(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string companyName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
-            int programSize = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            string companyName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
+            int programSize = msg.ReadInt32();
             List<Command> program = new List<Command>();
             for (int i = 0; i < programSize; ++i)
             {
@@ -693,9 +693,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqDiscardTech(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string companyName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
+            string userName = msg.ReadString();
+            string companyName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
 
 
             // 인증
@@ -731,9 +731,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqProduceProduct(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string companyName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
+            string userName = msg.ReadString();
+            string companyName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
 
 
             // 인증
@@ -788,9 +788,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqDiscardProduct(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string companyName = msg.ReadData<string>().Trim();
-            int productIndex = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            string companyName = msg.ReadString().Trim();
+            int productIndex = msg.ReadInt32();
 
 
             // 인증
@@ -822,9 +822,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqTechProgram(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string companyName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
+            string userName = msg.ReadString();
+            string companyName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
 
 
             // 인증
@@ -869,11 +869,11 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqSellTech(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string companyName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
-            int price = msg.ReadData<int>();
-            string targetUser = msg.ReadData<string>();
+            string userName = msg.ReadString();
+            string companyName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
+            int price = msg.ReadInt32();
+            string targetUser = msg.ReadString();
 
 
             // 인증
@@ -935,7 +935,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqAllSellingTech(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 인증
@@ -965,11 +965,11 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqBuyTech(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string sellerName = msg.ReadData<string>().Trim();
-            string techName = msg.ReadData<string>().Trim();
-            int price = msg.ReadData<int>();
-            string buyerName = msg.ReadData<string>().Trim();
+            string userName = msg.ReadString();
+            string sellerName = msg.ReadString().Trim();
+            string techName = msg.ReadString().Trim();
+            int price = msg.ReadInt32();
+            string buyerName = msg.ReadString().Trim();
 
 
             // 인증
@@ -1063,11 +1063,11 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqSellProduct(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string companyName = msg.ReadData<string>().Trim();
-            int productIndex = msg.ReadData<int>();
-            int price = msg.ReadData<int>();
-            string targetUser = msg.ReadData<string>();
+            string userName = msg.ReadString();
+            string companyName = msg.ReadString().Trim();
+            int productIndex = msg.ReadInt32();
+            int price = msg.ReadInt32();
+            string targetUser = msg.ReadString();
 
 
             // 인증
@@ -1133,7 +1133,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqAllSellingProduct(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 인증
@@ -1163,11 +1163,11 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqBuyProduct(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            string sellerName = msg.ReadData<string>().Trim();
-            string productName = msg.ReadData<string>().Trim();
-            int price = msg.ReadData<int>();
-            string buyerName = msg.ReadData<string>().Trim();
+            string userName = msg.ReadString();
+            string sellerName = msg.ReadString().Trim();
+            string productName = msg.ReadString().Trim();
+            int price = msg.ReadInt32();
+            string buyerName = msg.ReadString().Trim();
 
 
             // 인증

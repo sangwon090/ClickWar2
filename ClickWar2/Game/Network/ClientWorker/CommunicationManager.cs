@@ -56,11 +56,11 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfReceiveMail(NetMessageStream msg)
         {
-            int readFlag = msg.ReadData<int>();
-            string fromUser = msg.ReadData<string>();
-            string toUser = msg.ReadData<string>();
-            string sendingDate = msg.ReadData<string>();
-            string message = msg.ReadData<string>();
+            int readFlag = msg.ReadInt32();
+            string fromUser = msg.ReadString();
+            string toUser = msg.ReadString();
+            string sendingDate = msg.ReadString();
+            string message = msg.ReadString();
 
 
             // 수신함에 추가
@@ -102,7 +102,7 @@ namespace ClickWar2.Game.Network.ClientWorker
             writer.WriteData(this.SignDirector.LoginName);
             writer.WriteData(targetUserName);
             writer.WriteData(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-            writer.WriteData(message.Replace(writer.Token, "\n"));
+            writer.WriteData(message.Replace("\r\n", "\n"));
 
             this.Client.SendMessage(writer.CreateMessage((int)MessageTypes.Req_SendMail));
         }

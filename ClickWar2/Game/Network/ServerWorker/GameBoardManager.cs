@@ -325,7 +325,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqCountryLocation(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 국가 위치 찾기
@@ -335,7 +335,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
             // 국가 위치 전송
             NetMessageStream writer = new NetMessageStream();
-            writer.WriteData<int>(exist ? 1 : 0);
+            writer.WriteData(exist ? 1 : 0);
             writer.WriteData(x);
             writer.WriteData(y);
 
@@ -344,7 +344,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqNewTerritory(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 적당한 영토 고름
@@ -369,9 +369,9 @@ namespace ClickWar2.Game.Network.ServerWorker
                 m_addPowerLimiter.Update(client.ID);
 
 
-                string userName = msg.ReadData<string>();
-                int tileX = msg.ReadData<int>();
-                int tileY = msg.ReadData<int>();
+                string userName = msg.ReadString();
+                int tileX = msg.ReadInt32();
+                int tileY = msg.ReadInt32();
                 const int deltaPower = 1;
 
 
@@ -402,8 +402,8 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqChunk(ServerVisitor client, NetMessageStream msg)
         {
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             int chunkX, chunkY;
@@ -441,9 +441,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqBuildCountry(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
             const int beginningMoney = 100;
             
@@ -477,7 +477,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
                     // 건국 알림
                     NetMessageStream writer = new NetMessageStream();
-                    writer.WriteData<int>(1); // 성공여부
+                    writer.WriteData(1); // 성공여부
                     writer.WriteData(userName);
                     writer.WriteData(tileX);
                     writer.WriteData(tileY);
@@ -493,7 +493,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
             // 건국 실패 알림
             NetMessageStream failWriter = new NetMessageStream();
-            failWriter.WriteData<int>(0);
+            failWriter.WriteData(0);
 
             return failWriter.CreateMessage((int)MessageTypes.Ntf_CountryBuilt);
         }
@@ -507,9 +507,9 @@ namespace ClickWar2.Game.Network.ServerWorker
                 m_attackLimiter.Update(client.ID);
 
 
-                string attackerName = msg.ReadData<string>();
-                int tileX = msg.ReadData<int>();
-                int tileY = msg.ReadData<int>();
+                string attackerName = msg.ReadString();
+                int tileX = msg.ReadInt32();
+                int tileY = msg.ReadInt32();
 
 
                 // 유저 인증하고
@@ -529,7 +529,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqAllTerritory(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             // 로그
@@ -607,7 +607,7 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqAllVision(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
 
             int chunkSize = this.GameBoard.Board.ChunkSize;
@@ -730,11 +730,11 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqSendPower(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int fromX = msg.ReadData<int>();
-            int fromY = msg.ReadData<int>();
-            int toX = msg.ReadData<int>();
-            int toY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int fromX = msg.ReadInt32();
+            int fromY = msg.ReadInt32();
+            int toX = msg.ReadInt32();
+            int toY = msg.ReadInt32();
 
 
             // 인증
@@ -751,10 +751,10 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqEditTileSign(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
-            string sign = msg.ReadData<string>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
+            string sign = msg.ReadString();
 
 
             // 인증
@@ -770,9 +770,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqBuildFactory(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 인증
@@ -811,9 +811,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqConvertAllResource(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 인증
@@ -829,9 +829,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqDestroyFactory(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 인증
@@ -870,11 +870,11 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqBuildChip(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
-            string companyName = msg.ReadData<string>();
-            int productIndex = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
+            string companyName = msg.ReadString();
+            int productIndex = msg.ReadInt32();
 
 
             // 인증
@@ -933,9 +933,9 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqDestroyChip(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int tileX = msg.ReadData<int>();
-            int tileY = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int tileX = msg.ReadInt32();
+            int tileY = msg.ReadInt32();
 
 
             // 인증
@@ -969,11 +969,11 @@ namespace ClickWar2.Game.Network.ServerWorker
 
         private NetMessage WhenReqSetScreen(ServerVisitor client, NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int left = msg.ReadData<int>();
-            int top = msg.ReadData<int>();
-            int width = msg.ReadData<int>();
-            int height = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int left = msg.ReadInt32();
+            int top = msg.ReadInt32();
+            int width = msg.ReadInt32();
+            int height = msg.ReadInt32();
 
 
             // 인증

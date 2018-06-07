@@ -86,15 +86,15 @@ namespace ClickWar2.Game
 
         public void ReadFromStream(NetMessageStream stream)
         {
-            this.Owner = stream.ReadData<string>();
+            this.Owner = stream.ReadString();
             this.ReadFromStreamExceptOwner(stream);
         }
 
         public void ReadFromStreamExceptOwner(NetMessageStream stream)
         {
-            this.Power = stream.ReadData<int>();
-            this.Sign = stream.ReadData<string>();
-            this.Kind = (TileTypes)stream.ReadData<int>();
+            this.Power = stream.ReadInt32();
+            this.Sign = stream.ReadString();
+            this.Kind = (TileTypes)stream.ReadInt32();
         }
 
         public void WriteToStream(BinaryWriter bw)

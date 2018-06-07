@@ -45,7 +45,7 @@ namespace ClickWar2.Game.Network.ClientWorker
         private void WhenNtfNotice(NetMessageStream msg)
         {
             // 공지 갱신
-            this.LatestNotice = msg.ReadData<string>();
+            this.LatestNotice = msg.ReadString();
 
             // 공지 갱신 알림
             if (m_noticeCallback != null)
@@ -57,7 +57,7 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfCheckUser(NetMessageStream msg)
         {
-            int data = msg.ReadData<int>();
+            int data = msg.ReadInt32();
 
 
             this.WhenCheckUser(data);

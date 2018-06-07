@@ -82,12 +82,12 @@ namespace ClickWar2.Game
             this.Parameters.Clear();
 
 
-            this.Name = stream.ReadData<string>();
+            this.Name = stream.ReadString();
 
-            int paramCount = stream.ReadData<int>();
+            int paramCount = stream.ReadInt32();
             for (int i = 0; i < paramCount; ++i)
             {
-                this.Parameters.Add(stream.ReadData<string>());
+                this.Parameters.Add(stream.ReadString());
             }
         }
 

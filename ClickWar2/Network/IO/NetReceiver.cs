@@ -235,11 +235,11 @@ namespace ClickWar2.Network.IO
                                 {
                                     // 정상적으로 수신되었음을 알림.
                                     NetMessageStream reader = new NetMessageStream(msg);
-                                    int seqCount = reader.ReadData<int>();
+                                    int seqCount = reader.ReadInt32();
 
                                     for (int i = 0; i < seqCount; ++i)
                                     {
-                                        int seqNum = reader.ReadData<int>();
+                                        int seqNum = reader.ReadInt32();
                                         this.Sender.ReceiveNormally(seqNum);
                                     }
                                 }
@@ -276,7 +276,7 @@ namespace ClickWar2.Network.IO
                                         {
                                             // 키 갱신
                                             NetMessageStream reader = new NetMessageStream(msg);
-                                            var keyStr = reader.ReadData<string>();
+                                            var keyStr = reader.ReadString();
 
                                             m_key = Enumerable.Range(0, keyStr.Length)
                                                 .Where(x => x % 2 == 0)

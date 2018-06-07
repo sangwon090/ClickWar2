@@ -79,8 +79,8 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenRspUserColor(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
-            int colorRgb = msg.ReadData<int>();
+            string userName = msg.ReadString();
+            int colorRgb = msg.ReadInt32();
 
 
             if (m_userColorMap.ContainsKey(userName))
@@ -106,21 +106,21 @@ namespace ClickWar2.Game.Network.ClientWorker
 
         private void WhenNtfUserLogin(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
             EventDirector.StartEvent((int)UserEvents.Login, userName);
         }
 
         private void WhenNtfUserLogout(NetMessageStream msg)
         {
-            string userName = msg.ReadData<string>();
+            string userName = msg.ReadString();
 
             EventDirector.StartEvent((int)UserEvents.Logout, userName);
         }
 
         private void WhenRspAllUserInfo(NetMessageStream msg)
         {
-            bool bClear = (msg.ReadData<int>() != 0);
+            bool bClear = (msg.ReadInt32() != 0);
 
             if (bClear)
             {
@@ -128,11 +128,11 @@ namespace ClickWar2.Game.Network.ClientWorker
             }
             else
             {
-                int colorRgb = msg.ReadData<int>();
-                string name = msg.ReadData<string>();
-                int area = msg.ReadData<int>();
-                int resource = msg.ReadData<int>();
-                bool isEnd = (msg.ReadData<int>() != 0);
+                int colorRgb = msg.ReadInt32();
+                string name = msg.ReadString();
+                int area = msg.ReadInt32();
+                int resource = msg.ReadInt32();
+                bool isEnd = (msg.ReadInt32() != 0);
 
                 // 자신의 정보이면 따로 저장
                 if (name == this.SignDirector.LoginName)
@@ -169,11 +169,11 @@ namespace ClickWar2.Game.Network.ClientWorker
             this.Me.Companies.Clear();
 
 
-            int count = msg.ReadData<int>();
+            int count = msg.ReadInt32();
 
             for (int i = 0; i < count; ++i)
             {
-                this.Me.Companies.Add(msg.ReadData<string>());
+                this.Me.Companies.Add(msg.ReadString());
             }
 
 
@@ -189,12 +189,12 @@ namespace ClickWar2.Game.Network.ClientWorker
             this.MyCompanySiteCount.Clear();
 
 
-            int count = msg.ReadData<int>();
+            int count = msg.ReadInt32();
 
             for (int i = 0; i < count; ++i)
             {
-                string company = msg.ReadData<string>();
-                int siteCount = msg.ReadData<int>();
+                string company = msg.ReadString();
+                int siteCount = msg.ReadInt32();
 
                 if (this.MyCompanySiteCount.ContainsKey(company))
                     this.MyCompanySiteCount[company] = siteCount;
@@ -208,12 +208,12 @@ namespace ClickWar2.Game.Network.ClientWorker
             this.MyCompanyTechList.Clear();
 
 
-            int count = msg.ReadData<int>();
+            int count = msg.ReadInt32();
 
             for (int i = 0; i < count; ++i)
             {
-                string company = msg.ReadData<string>();
-                int techCount = msg.ReadData<int>();
+                string company = msg.ReadString();
+                int techCount = msg.ReadInt32();
 
                 List<string> techList = null;
 
@@ -227,7 +227,7 @@ namespace ClickWar2.Game.Network.ClientWorker
 
                 for (int t = 0; t < techCount; ++t)
                 {
-                    techList.Add(msg.ReadData<string>());
+                    techList.Add(msg.ReadString());
                 }
             }
         }
@@ -237,12 +237,12 @@ namespace ClickWar2.Game.Network.ClientWorker
             this.MyCompanyProductList.Clear();
 
 
-            int count = msg.ReadData<int>();
+            int count = msg.ReadInt32();
 
             for (int i = 0; i < count; ++i)
             {
-                string company = msg.ReadData<string>();
-                int productCount = msg.ReadData<int>();
+                string company = msg.ReadString();
+                int productCount = msg.ReadInt32();
 
                 List<string> productList = null;
 
@@ -256,7 +256,7 @@ namespace ClickWar2.Game.Network.ClientWorker
 
                 for (int t = 0; t < productCount; ++t)
                 {
-                    productList.Add(msg.ReadData<string>());
+                    productList.Add(msg.ReadString());
                 }
             }
         }
