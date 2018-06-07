@@ -142,17 +142,27 @@ namespace ClickWar2.Network.IO
                     // 헤더 읽고 생성
                     byte[] headerBytes = new byte[NetMessageHeader.ByteSize];
 
-                    try
-                    {
-                        readResult = m_socket.Receive(headerBytes, 0, headerBytes.Length, SocketFlags.None);
-                    }
-                    catch
-                    { }
+                    int recvSize = 0;
 
-                    // 읽기 실패
-                    if (readResult <= 0)
+                    while (recvSize < headerBytes.Length)
                     {
-                        break;
+                        try
+                        {
+                            readResult = m_socket.Receive(headerBytes, recvSize,
+                                headerBytes.Length - recvSize, SocketFlags.None);
+                        }
+                        catch
+                        { }
+
+                        // 읽기 실패
+                        if (readResult <= 0)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            recvSize += readResult;
+                        }
                     }
 
                     NetMessageHeader header = new NetMessageHeader(headerBytes);
@@ -182,17 +192,28 @@ namespace ClickWar2.Network.IO
 
                             // 바디 읽고 생성
                             byte[] bodyBytes = new byte[header.BodySize];
-                            try
-                            {
-                                readResult = m_socket.Receive(bodyBytes, 0, bodyBytes.Length, SocketFlags.None);
-                            }
-                            catch
-                            { }
 
-                            // 읽기 실패
-                            if (readResult <= 0)
+                            int recvBodySize = 0;
+
+                            while (recvBodySize < bodyBytes.Length)
                             {
-                                break;
+                                try
+                                {
+                                    readResult = m_socket.Receive(bodyBytes, recvBodySize,
+                                        bodyBytes.Length - recvBodySize, SocketFlags.None);
+                                }
+                                catch
+                                { }
+
+                                // 읽기 실패
+                                if (readResult <= 0)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    recvBodySize += readResult;
+                                }
                             }
 
                             // 암호화 키가 있으면 해독
