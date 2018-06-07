@@ -26,7 +26,7 @@ namespace ClickWar2
 
             if (doc == null)
             {
-                downloadLink = "http://blog.naver.com/tlsehdgus321";
+                downloadLink = "http://neurowhai.tistory.com/187";
                 bShutdown = true;
                 notice = "";
                 return true;
