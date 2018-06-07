@@ -32,15 +32,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBox_loginUser = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip_manageLoginUser = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItem_forceLogout = new System.Windows.Forms.ToolStripMenuItem();
             this.label_userCount = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer_update = new System.Windows.Forms.Timer(this.components);
             this.timer_slowUpdate = new System.Windows.Forms.Timer(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listBox_allUser = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip_manageAccount = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItem_deleteAccount = new System.Windows.Forms.ToolStripMenuItem();
             this.label_allUserCount = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.timer_fastUpdate = new System.Windows.Forms.Timer(this.components);
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.checkBox_showUsersScreen = new System.Windows.Forms.CheckBox();
             this.checkBox_drawMap = new System.Windows.Forms.CheckBox();
@@ -53,18 +56,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.listBox_log = new System.Windows.Forms.ListBox();
-            this.contextMenuStrip_manageLoginUser = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuItem_forceLogout = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip_manageAccount = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuItem_deleteAccount = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.contextMenuStrip_manageLoginUser.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.contextMenuStrip_manageAccount.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.contextMenuStrip_manageLoginUser.SuspendLayout();
-            this.contextMenuStrip_manageAccount.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -90,6 +89,22 @@
             this.listBox_loginUser.ScrollAlwaysVisible = true;
             this.listBox_loginUser.Size = new System.Drawing.Size(215, 109);
             this.listBox_loginUser.TabIndex = 1;
+            // 
+            // contextMenuStrip_manageLoginUser
+            // 
+            this.contextMenuStrip_manageLoginUser.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip_manageLoginUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_forceLogout});
+            this.contextMenuStrip_manageLoginUser.Name = "contextMenuStrip_manageLoginUser";
+            this.contextMenuStrip_manageLoginUser.Size = new System.Drawing.Size(174, 28);
+            this.contextMenuStrip_manageLoginUser.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_manageLoginUser_Opening);
+            // 
+            // ToolStripMenuItem_forceLogout
+            // 
+            this.ToolStripMenuItem_forceLogout.Name = "ToolStripMenuItem_forceLogout";
+            this.ToolStripMenuItem_forceLogout.Size = new System.Drawing.Size(173, 24);
+            this.ToolStripMenuItem_forceLogout.Text = "강제 로그아웃";
+            this.ToolStripMenuItem_forceLogout.Click += new System.EventHandler(this.ToolStripMenuItem_forceLogout_Click);
             // 
             // label_userCount
             // 
@@ -143,6 +158,22 @@
             this.listBox_allUser.Size = new System.Drawing.Size(381, 109);
             this.listBox_allUser.TabIndex = 1;
             // 
+            // contextMenuStrip_manageAccount
+            // 
+            this.contextMenuStrip_manageAccount.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip_manageAccount.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_deleteAccount});
+            this.contextMenuStrip_manageAccount.Name = "contextMenuStrip_manageAccount";
+            this.contextMenuStrip_manageAccount.Size = new System.Drawing.Size(144, 28);
+            this.contextMenuStrip_manageAccount.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_manageAccount_Opening);
+            // 
+            // ToolStripMenuItem_deleteAccount
+            // 
+            this.ToolStripMenuItem_deleteAccount.Name = "ToolStripMenuItem_deleteAccount";
+            this.ToolStripMenuItem_deleteAccount.Size = new System.Drawing.Size(143, 24);
+            this.ToolStripMenuItem_deleteAccount.Text = "계정 삭제";
+            this.ToolStripMenuItem_deleteAccount.Click += new System.EventHandler(this.ToolStripMenuItem_deleteAccount_Click);
+            // 
             // label_allUserCount
             // 
             this.label_allUserCount.AutoSize = true;
@@ -160,11 +191,6 @@
             this.label3.Size = new System.Drawing.Size(56, 15);
             this.label3.TabIndex = 1;
             this.label3.Text = "Count :";
-            // 
-            // timer_fastUpdate
-            // 
-            this.timer_fastUpdate.Interval = 4;
-            this.timer_fastUpdate.Tick += new System.EventHandler(this.timer_fastUpdate_Tick);
             // 
             // groupBox3
             // 
@@ -291,38 +317,6 @@
             this.listBox_log.Size = new System.Drawing.Size(699, 124);
             this.listBox_log.TabIndex = 0;
             // 
-            // contextMenuStrip_manageLoginUser
-            // 
-            this.contextMenuStrip_manageLoginUser.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip_manageLoginUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_forceLogout});
-            this.contextMenuStrip_manageLoginUser.Name = "contextMenuStrip_manageLoginUser";
-            this.contextMenuStrip_manageLoginUser.Size = new System.Drawing.Size(180, 30);
-            this.contextMenuStrip_manageLoginUser.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_manageLoginUser_Opening);
-            // 
-            // ToolStripMenuItem_forceLogout
-            // 
-            this.ToolStripMenuItem_forceLogout.Name = "ToolStripMenuItem_forceLogout";
-            this.ToolStripMenuItem_forceLogout.Size = new System.Drawing.Size(179, 26);
-            this.ToolStripMenuItem_forceLogout.Text = "강제 로그아웃";
-            this.ToolStripMenuItem_forceLogout.Click += new System.EventHandler(this.ToolStripMenuItem_forceLogout_Click);
-            // 
-            // contextMenuStrip_manageAccount
-            // 
-            this.contextMenuStrip_manageAccount.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip_manageAccount.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_deleteAccount});
-            this.contextMenuStrip_manageAccount.Name = "contextMenuStrip_manageAccount";
-            this.contextMenuStrip_manageAccount.Size = new System.Drawing.Size(150, 30);
-            this.contextMenuStrip_manageAccount.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_manageAccount_Opening);
-            // 
-            // ToolStripMenuItem_deleteAccount
-            // 
-            this.ToolStripMenuItem_deleteAccount.Name = "ToolStripMenuItem_deleteAccount";
-            this.ToolStripMenuItem_deleteAccount.Size = new System.Drawing.Size(149, 26);
-            this.ToolStripMenuItem_deleteAccount.Text = "계정 삭제";
-            this.ToolStripMenuItem_deleteAccount.Click += new System.EventHandler(this.ToolStripMenuItem_deleteAccount_Click);
-            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -350,16 +344,16 @@
             this.Resize += new System.EventHandler(this.Form_Main_Resize);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.contextMenuStrip_manageLoginUser.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.contextMenuStrip_manageAccount.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
-            this.contextMenuStrip_manageLoginUser.ResumeLayout(false);
-            this.contextMenuStrip_manageAccount.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -376,7 +370,6 @@
         private System.Windows.Forms.ListBox listBox_allUser;
         private System.Windows.Forms.Label label_allUserCount;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Timer timer_fastUpdate;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox checkBox_drawMap;
         private System.Windows.Forms.GroupBox groupBox4;

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using ClickWar2.Game.Network;
 using ClickWar2.Game.View;
@@ -44,6 +45,7 @@ namespace ClickWar2_Server
         // Model
 
         protected GameServer m_server = null;
+        private Thread m_serverThread = null;
 
         //#####################################################################################
         // View
@@ -78,6 +80,12 @@ namespace ClickWar2_Server
             if (m_server != null)
             {
                 m_server.Stop();
+                m_server = null;
+            }
+
+            if (m_serverThread != null)
+            {
+                m_serverThread.Join();
             }
 
             m_server = server;
@@ -95,7 +103,10 @@ namespace ClickWar2_Server
             // 갱신 타이머 시작
             this.timer_update.Start();
             this.timer_slowUpdate.Start();
-            this.timer_fastUpdate.Start();
+
+
+            m_serverThread = new Thread(this.JobServer);
+            m_serverThread.Start();
         }
 
         //#####################################################################################
@@ -153,13 +164,13 @@ namespace ClickWar2_Server
                 this.Invalidate();
         }
 
-        private void timer_fastUpdate_Tick(object sender, EventArgs e)
+        private void JobServer()
         {
-            // 한 프레임에 더 많은 처리를 하도록 함.
-            int loopCount = 32 + m_server.UserDirector.LoginUsersCount * 64;
-            for (int i = 0; i < loopCount; ++i)
+            while (m_server != null)
             {
                 m_server.Update();
+
+                Task.Delay(TimeSpan.Zero).Wait();
             }
         }
 
