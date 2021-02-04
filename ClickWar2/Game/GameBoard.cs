@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
 using ClickWar2.Utility;
+using System.Reflection;
 
 namespace ClickWar2.Game
 {
@@ -117,7 +118,7 @@ namespace ClickWar2.Game
             using (BinaryWriter bw = new BinaryWriter(new FileStream(this.BoardPath + fileName, FileMode.Create)))
             {
                 // 파일 버전
-                bw.Write(Application.ProductVersion.ToString());
+                bw.Write("REMASTERED_0");
 
 
                 // 청크 위치
