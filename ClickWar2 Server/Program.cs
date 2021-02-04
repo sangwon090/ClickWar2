@@ -18,7 +18,7 @@ namespace ClickWar2_Server
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form_Start());
+            Application.Run(new Form_Open());
         }
 
         private static System.Reflection.Assembly ResolveAssembly(object sender, ResolveEventArgs args)

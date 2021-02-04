@@ -72,7 +72,15 @@ namespace ClickWar2_Server
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
+            /*
+            bool bExit = this.CheckUpdateAndNotice();
 
+            if (bExit)
+            {
+                this.Close();
+                Application.Exit();
+            }
+            */
         }
 
         public void Reset(GameServer server)
@@ -363,6 +371,43 @@ namespace ClickWar2_Server
 
                 this.listBox_log.EndUpdate();
             }));
+        }
+
+        private bool CheckUpdateAndNotice()
+        {
+            string downloadLink;
+            bool bShutdown;
+            string notice;
+
+            bool bNeedUpdate = ClickWar2.Application.CheckUpdateAndNotice("ServerPublish", Application.ProductVersion,
+                out downloadLink, out bShutdown, out notice);
+
+            if (notice.Length > 0)
+            {
+                MessageBox.Show(string.Format("{0}", notice), "Notice",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            if (bShutdown)
+            {
+                Application.Exit();
+                return bShutdown;
+            }
+
+            if (bNeedUpdate)
+            {
+                var dlgResult = MessageBox.Show("업데이트가 있습니다.\n다운로드 하시겠습니까?", "Info",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dlgResult == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(downloadLink);
+                    Application.Exit();
+                }
+            }
+
+
+            return bShutdown;
         }
     }
 }

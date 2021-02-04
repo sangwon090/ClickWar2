@@ -57,6 +57,16 @@ namespace ClickWar2_Client
 
         private void Form_Connect_Load(object sender, EventArgs e)
         {
+            /*
+            bool bExit = this.CheckUpdateAndNotice();
+
+            if (bExit)
+            {
+                this.Close();
+                Application.Exit();
+            }
+            */
+
             this.checkBox_saveConnection.Checked = RegistryHelper.GetDataAsBool("AutoLoginFlag", false);
 
             if (this.checkBox_saveConnection.Checked)
@@ -391,6 +401,42 @@ namespace ClickWar2_Client
 
 
             EnableUI();
+        }
+
+        private bool CheckUpdateAndNotice()
+        {
+            string downloadLink;
+            bool bShutdown;
+            string notice;
+
+            bool bNeedUpdate = ClickWar2.Application.CheckUpdateAndNotice("ClientPublish", Application.ProductVersion,
+                out downloadLink, out bShutdown, out notice);
+
+            if (notice.Length > 0)
+            {
+                MessageBox.Show(string.Format("{0}", notice), "Notice",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            if (bShutdown)
+            {
+                return bShutdown;
+            }
+
+            if (bNeedUpdate)
+            {
+                var dlgResult = MessageBox.Show("업데이트가 있습니다.\n다운로드 하시겠습니까?", "Info",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dlgResult == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(downloadLink);
+                    return true;
+                }
+            }
+
+
+            return bShutdown;
         }
     }
 }
