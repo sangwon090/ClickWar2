@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -144,6 +145,14 @@ namespace ClickWar2_Client
 
         //#####################################################################################
 
+        protected string EncryptPassword(string password)
+        {
+            SHA256Managed sha256Managed = new SHA256Managed();
+            byte[] hash = sha256Managed.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            return Convert.ToBase64String(hash);
+        }
+
         protected void BeginLogin()
         {
             DisableUI();
@@ -184,10 +193,8 @@ namespace ClickWar2_Client
                         // 자동 로그인 정보 저장
                         this.SaveAutoLoginInformation();
 
-
                         // 로그인 요청
-                        m_client.SignDirector.Login(this.textBox_name.Text, this.textBox_password.Text,
-                            this.WhenReceiveLoginResult);
+                        m_client.SignDirector.Login(this.textBox_name.Text, EncryptPassword(textBox_password.Text), this.WhenReceiveLoginResult);
 
                         this.timer_update.Start();
 
@@ -325,9 +332,7 @@ namespace ClickWar2_Client
                         if (color.R >= 100 || color.G >= 100 || color.B >= 100)
                         {
                             // 회원가입 요청
-                            m_client.SignDirector.Register(this.textBox_name.Text, this.textBox_password.Text,
-                                color,
-                                this.WhenReceiveRegisterResult);
+                            m_client.SignDirector.Register(this.textBox_name.Text, EncryptPassword(textBox_password.Text), color, this.WhenReceiveRegisterResult);
 
                             this.timer_update.Start();
 
