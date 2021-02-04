@@ -334,7 +334,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ClickWar2 Server";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Main_FormClosing);
-            this.Load += new System.EventHandler(this.Form_Main_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_Main_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_Main_KeyDown);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form_Main_MouseClick);

@@ -70,19 +70,6 @@ namespace ClickWar2_Server
             Application.Exit();
         }
 
-        private void Form_Main_Load(object sender, EventArgs e)
-        {
-            /*
-            bool bExit = this.CheckUpdateAndNotice();
-
-            if (bExit)
-            {
-                this.Close();
-                Application.Exit();
-            }
-            */
-        }
-
         public void Reset(GameServer server)
         {
             if (m_server != null)

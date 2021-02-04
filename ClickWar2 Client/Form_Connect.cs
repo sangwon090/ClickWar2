@@ -34,40 +34,8 @@ namespace ClickWar2_Client
 
         //#####################################################################################
 
-        protected List<ClickWar2.Database.ServerData> m_serverList = new List<ClickWar2.Database.ServerData>();
-
-        //#####################################################################################
-
-        public void Reset()
-        {
-            m_serverList = ClickWar2.Application.GetOfficialServer("OfficialServer");
-
-
-            this.comboBox_serverList.BeginUpdate();
-            this.comboBox_serverList.Items.Clear();
-
-            foreach (var server in m_serverList)
-            {
-                this.comboBox_serverList.Items.Add(server.Name);
-            }
-
-            this.comboBox_serverList.EndUpdate();
-        }
-
-        //#####################################################################################
-
         private void Form_Connect_Load(object sender, EventArgs e)
         {
-            /*
-            bool bExit = this.CheckUpdateAndNotice();
-
-            if (bExit)
-            {
-                this.Close();
-                Application.Exit();
-            }
-            */
-
             this.checkBox_saveConnection.Checked = RegistryHelper.GetDataAsBool("AutoLoginFlag", false);
 
             if (this.checkBox_saveConnection.Checked)
@@ -75,7 +43,6 @@ namespace ClickWar2_Client
                 // 레지스트리에서 정보 가져옴
                 try
                 {
-                    this.comboBox_serverList.Text = RegistryHelper.GetData("LoginServer", "");
                     this.textBox_address.Text = RegistryHelper.GetData("LoginAddress", "");
                     this.textBox_port.Text = RegistryHelper.GetData("LoginPort", "");
                     this.textBox_name.Text = RegistryHelper.GetData("LoginName", "");
@@ -106,17 +73,6 @@ namespace ClickWar2_Client
             }
 
             Application.Exit();
-        }
-
-        private void comboBox_serverList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int index = this.comboBox_serverList.SelectedIndex;
-
-            if (index >= 0 && index < m_serverList.Count)
-            {
-                this.textBox_address.Text = m_serverList[index].Address;
-                this.textBox_port.Text = m_serverList[index].Port;
-            }
         }
 
         private void button_connect_Click(object sender, EventArgs e)
@@ -233,7 +189,6 @@ namespace ClickWar2_Client
         {
             if (this.checkBox_saveConnection.Checked)
             {
-                RegistryHelper.SetData("LoginServer", this.comboBox_serverList.Text);
                 RegistryHelper.SetData("LoginAddress", this.textBox_address.Text);
                 RegistryHelper.SetData("LoginPort", this.textBox_port.Text);
                 RegistryHelper.SetData("LoginName", this.textBox_name.Text);
@@ -261,8 +216,6 @@ namespace ClickWar2_Client
             this.textBox_address.Enabled = true;
             this.textBox_port.Enabled = true;
 
-            this.comboBox_serverList.Enabled = true;
-
             this.textBox_name.Enabled = true;
             this.textBox_password.Enabled = true;
             this.checkBox_saveConnection.Enabled = true;
@@ -273,8 +226,6 @@ namespace ClickWar2_Client
         {
             this.textBox_address.Enabled = false;
             this.textBox_port.Enabled = false;
-
-            this.comboBox_serverList.Enabled = false;
 
             this.textBox_name.Enabled = false;
             this.textBox_password.Enabled = false;
@@ -406,42 +357,6 @@ namespace ClickWar2_Client
 
 
             EnableUI();
-        }
-
-        private bool CheckUpdateAndNotice()
-        {
-            string downloadLink;
-            bool bShutdown;
-            string notice;
-
-            bool bNeedUpdate = ClickWar2.Application.CheckUpdateAndNotice("ClientPublish", Application.ProductVersion,
-                out downloadLink, out bShutdown, out notice);
-
-            if (notice.Length > 0)
-            {
-                MessageBox.Show(string.Format("{0}", notice), "Notice",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
-            if (bShutdown)
-            {
-                return bShutdown;
-            }
-
-            if (bNeedUpdate)
-            {
-                var dlgResult = MessageBox.Show("업데이트가 있습니다.\n다운로드 하시겠습니까?", "Info",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (dlgResult == DialogResult.Yes)
-                {
-                    System.Diagnostics.Process.Start(downloadLink);
-                    return true;
-                }
-            }
-
-
-            return bShutdown;
         }
     }
 }
